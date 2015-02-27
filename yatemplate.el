@@ -58,8 +58,7 @@
 (defcustom yatemplate-dir
   (locate-user-emacs-file "templates")
   "The directory containing file templates."
-  :group 'yatemplate
-  )
+  :group 'yatemplate)
 
 (defun yatemplate-expand-yas-buffer ()
   "Expand the whole buffer with `yas-expand-snippet'."
@@ -67,8 +66,7 @@
 
 (defun yatemplate-sorted-files-in-dir ()
   "Return a sorted list of files in the template directory."
-  (sort (file-expand-wildcards (concat yatemplate-dir "**/*")) 'string<)
-  )
+  (sort (file-expand-wildcards (concat yatemplate-dir "**/*")) 'string<))
 
 (defun yatemplate-filename-split-regex (FILENAME)
   "Split the regular expression from FILENAME and return it."
@@ -79,8 +77,7 @@
   "Fill `auto-insert-alist'."
   (dolist (filename (reverse (yatemplate-sorted-files-in-dir)) nil)
     (let ((file-regex (yatemplate-filename-split-regex filename)))
-      (push `(,file-regex . [,filename yatemplate-expand-yas-buffer]) auto-insert-alist)
-      )))
+      (push `(,file-regex . [,filename yatemplate-expand-yas-buffer]) auto-insert-alist))))
 
 (provide 'yatemplate)
 ;;; yatemplate.el ends here

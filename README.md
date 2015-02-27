@@ -15,7 +15,7 @@ Simply initialize it by calling
 
 once in your Emacs initialization file. You will also need to activate
 [auto-insert-mode][] because all YATemplate does is inserting some elements into
-`auto-insert-alist.
+`auto-insert-alist`.
 
 [MELPA]: http://melpa.org "MELPA"
 

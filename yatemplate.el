@@ -53,7 +53,8 @@
 (defgroup yatemplate
   nil
   "Customization group for yatemplate."
-  :group 'tools)
+  :group 'files
+  :group 'convenience)
 
 (defcustom yatemplate-dir
   (locate-user-emacs-file "templates")

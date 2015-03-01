@@ -1,4 +1,4 @@
-;;; yatemplate.el --- File templates with yasnippet   -*- lexical-binding: t; -*-
+;;; yatemplate.el --- File templates with yasnippet
 
 ;; Copyright (C) 2015  Wieland Hoffmann <themineo+yatemplate@gmail.com>
 

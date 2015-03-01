@@ -32,15 +32,15 @@
 ;; Emacs initialization file to populate `auto-insert-alist' with filenames from
 ;; `yatemplate-dir'.
 
-;; Each new element will be **pushed** onto `auto-insert-alist'. To guarantee a
-;; particular order, filenames must contain one colon (":"). After collecting
-;; all the filenames in `yatemplate-dir', their names will be sorted with
-;; `string<', then split on the colon. The first substring will be discarded,
-;; which means it can be used to establish an ordering. The second substring
-;; will be used as a regexp as the CONDITION of the element to push onto
-;; `auto-insert-alist'. The ACTION will be a vector of actions that first insert
-;; the content of the template file and then expand the content of the buffer
-;; with `yatemplate-expand-yas-buffer'.
+;; Each filename will be turned into a new element to `push' onto
+;; `auto-insert-alist'. To guarantee a particular order, filenames must contain
+;; one colon (":"). After collecting all the filenames in `yatemplate-dir',
+;; their names will be sorted with `string<', then split on the colon. The first
+;; substring will be discarded, which means it can be used to establish an
+;; ordering. The second substring will be used as a regexp as the CONDITION of
+;; the element to push onto `auto-insert-alist'. The ACTION will be a vector of
+;; actions that first insert the content of the template file and then expand
+;; the content of the buffer with `yatemplate-expand-yas-buffer'.
 
 ;; This means that if `yatemplate-dir' looks like this:
 

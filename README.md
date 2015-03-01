@@ -1,3 +1,5 @@
+[![MELPA](http://melpa.org/packages/yatemplate-badge.svg)](http://melpa.org/#/yatemplate)
+
 # YATemplate #
 
 ## Installation ##

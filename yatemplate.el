@@ -40,7 +40,9 @@
 ;; ordering. The second substring will be used as a regexp as the CONDITION of
 ;; the element to push onto `auto-insert-alist'. The ACTION will be a vector of
 ;; actions that first insert the content of the template file and then expand
-;; the content of the buffer with `yatemplate-expand-yas-buffer'.
+;; the content of the buffer with `yatemplate-expand-yas-buffer', which simply
+;; calls `yas-expand-snippet', so you can use everything YASnippet offers in
+;; the template.
 
 ;; This means that if `yatemplate-dir' looks like this:
 

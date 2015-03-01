@@ -3,7 +3,7 @@
 ## Installation ##
 
 Install this package from [MELPA][] with <kbd>M-x package-install RET
-yatemplate</kbd>.
+yatemplate RET</kbd>.
 
 ## Usage ##
 

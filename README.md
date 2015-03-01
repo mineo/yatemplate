@@ -32,8 +32,8 @@ This means that if `yatemplate-dir` looks like this:
     ├── 00:test_.*.py
     └── 01:.*.py
 
-`yatemplate-fill-alist` will first `push` (".\*.py" . ACTION) onto
-`auto-insert-alist` and then ("test_.\*.py" . ACTION).
+`yatemplate-fill-alist` will first `push` `(".*.py" . ACTION)` onto
+`auto-insert-alist` and then `("test_.*.py" . ACTION)`.
 
 Of course, you will need to enable [auto-insert-mode][] to have the snippet
 inserted and expanded into new files.

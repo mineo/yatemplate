@@ -67,6 +67,7 @@
   :group 'files
   :group 'convenience)
 
+;;;###autoload
 (defcustom yatemplate-dir
   (locate-user-emacs-file "templates")
   "The directory containing file templates."

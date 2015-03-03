@@ -82,14 +82,23 @@
 
 (defun yatemplate-filename-split-regex (FILENAME)
   "Split the regular expression from FILENAME and return it."
-  (nth 1 (split-string FILENAME ":")))
+  (let ((split-name (split-string FILENAME ":")))
+    (if (eq (length split-name) 2)
+        (nth 1 split-name)
+      (progn
+        (lwarn "yatemplate" 'error
+               "%s filename does not contain exactly one colon"
+               FILENAME)
+        nil))))
 
 ;;;###autoload
 (defun yatemplate-fill-alist ()
   "Fill `auto-insert-alist'."
   (dolist (filename (reverse (yatemplate-sorted-files-in-dir)) nil)
     (let ((file-regex (yatemplate-filename-split-regex filename)))
-      (push `(,file-regex . [,filename yatemplate-expand-yas-buffer]) auto-insert-alist))))
+      (if (not (eq file-regex nil))
+          (push `(,file-regex . [,filename yatemplate-expand-yas-buffer])
+                auto-insert-alist)))))
 
 (provide 'yatemplate)
 ;;; yatemplate.el ends here

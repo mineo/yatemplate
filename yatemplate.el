@@ -97,7 +97,7 @@
   "Fill `auto-insert-alist'."
   (dolist (filename (reverse (yatemplate-sorted-files-in-dir)) nil)
     (let ((file-regex (yatemplate-filename-split-regex filename)))
-      (if (not (eq file-regex nil))
+      (if file-regex
           (push `(,file-regex . [,filename yatemplate-expand-yas-buffer])
                 auto-insert-alist)))))
 

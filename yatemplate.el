@@ -101,5 +101,13 @@
           (push `(,file-regex . [,filename yatemplate-expand-yas-buffer])
                 auto-insert-alist)))))
 
+(defun find-file-hook--yatemplate ()
+  "Set yatemplate files `snippet-mode' to be able to test."
+  (when (file-in-directory-p buffer-file-name yatemplate-dir)
+    (let ((mode major-mode))
+      (snippet-mode)
+      (set (make-local-variable 'yas--guessed-modes) (list mode)))))
+(add-hook 'find-file-hook 'find-file-hook--yatemplate)
+
 (provide 'yatemplate)
 ;;; yatemplate.el ends here

@@ -20,6 +20,7 @@
 (assert-nil (yatemplates))
 (write-region "a" nil "/tmp/yatemplate-test/01:test.el")
 (assert-equal '("test.el") (mapcar 'car (yatemplates)))
+(assert-equal '("test.el") (mapcar 'car (yatemplates)))
 (delete-directory yatemplate-dir t)
 
 (end-tests)

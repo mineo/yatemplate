@@ -95,11 +95,20 @@
 ;;;###autoload
 (defun yatemplate-fill-alist ()
   "Fill `auto-insert-alist'."
+  (yatemplate-remove-old-yatemplates-from-alist)
   (dolist (filename (reverse (yatemplate-sorted-files-in-dir)) nil)
     (let ((file-regex (yatemplate-filename-split-regex filename)))
       (if file-regex
           (push `(,file-regex . [,filename yatemplate-expand-yas-buffer])
                 auto-insert-alist)))))
+
+(defun yatemplate-remove-old-yatemplates-from-alist ()
+  "Remove all yatemplates from `auto-insert-alist' not to keep old settings."
+  (setq auto-insert-alist
+        (cl-remove-if
+         (lambda (pair)
+           (ignore-errors (eq 'yatemplate-expand-yas-buffer (aref (cdr pair) 1))))
+         auto-insert-alist)))
 
 ;;; Hooks
 (defun find-file-hook--yatemplate ()

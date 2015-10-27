@@ -41,6 +41,12 @@
 ;; now 02:.*.py and 10:test.el
 (assert-equal '(".*.py" "test.el") (yatemplates))
 
+(note "yatemplate-fill-alist: delete file")
+(delete-file "10:test.el")
+;; now 02:.*.py
+(assert-equal '(".*.py") (yatemplates))
+
+
 (delete-directory yatemplate-dir t)
 
 (end-tests)

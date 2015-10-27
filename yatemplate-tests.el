@@ -10,17 +10,36 @@
 (require 'cl-lib)
 (defun yatemplates ()
   (yatemplate-fill-alist)
-  (cl-remove-if-not
-   (lambda (pair)
-     (ignore-errors (eq 'yatemplate-expand-yas-buffer (aref (cdr pair) 1))))
-   auto-insert-alist))
+  (mapcar
+   'car
+   (cl-remove-if-not
+    (lambda (pair)
+      (ignore-errors (eq 'yatemplate-expand-yas-buffer (aref (cdr pair) 1))))
+    auto-insert-alist)))
 
 (setq yatemplate-dir "/tmp/yatemplate-test")
 (mkdir yatemplate-dir t)
+
+(note "yatemplate-fill-alist: no entry")
 (assert-nil (yatemplates))
+
+(note "yatemplate-fill-alist: one entry")
 (write-region "a" nil "/tmp/yatemplate-test/01:test.el")
-(assert-equal '("test.el") (mapcar 'car (yatemplates)))
-(assert-equal '("test.el") (mapcar 'car (yatemplates)))
+(assert-equal '("test.el") (yatemplates))
+
+(note "yatemplate-fill-alist: not duplicate")
+(assert-equal '("test.el") (yatemplates))
+
+(note "yatemplate-fill-alist: two entries")
+(write-region "a" nil "/tmp/yatemplate-test/02:.*.py")
+(assert-equal '("test.el" ".*.py") (yatemplates))
+(assert-equal '("test.el" ".*.py") (yatemplates))
+
+(note "yatemplate-fill-alist: rename file")
+(rename-file "/tmp/yatemplate-test/01:test.el" "/tmp/yatemplate-test/10:test.el")
+;; now 02:.*.py and 10:test.el
+(assert-equal '(".*.py" "test.el") (yatemplates))
+
 (delete-directory yatemplate-dir t)
 
 (end-tests)

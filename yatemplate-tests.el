@@ -19,24 +19,25 @@
 
 (setq yatemplate-dir "/tmp/yatemplate-test")
 (mkdir yatemplate-dir t)
+(setq default-directory yatemplate-dir)
 
 (note "yatemplate-fill-alist: no entry")
 (assert-nil (yatemplates))
 
 (note "yatemplate-fill-alist: one entry")
-(write-region "a" nil "/tmp/yatemplate-test/01:test.el")
+(write-region "a" nil "01:test.el")
 (assert-equal '("test.el") (yatemplates))
 
 (note "yatemplate-fill-alist: not duplicate")
 (assert-equal '("test.el") (yatemplates))
 
 (note "yatemplate-fill-alist: two entries")
-(write-region "a" nil "/tmp/yatemplate-test/02:.*.py")
+(write-region "a" nil "02:.*.py")
 (assert-equal '("test.el" ".*.py") (yatemplates))
 (assert-equal '("test.el" ".*.py") (yatemplates))
 
 (note "yatemplate-fill-alist: rename file")
-(rename-file "/tmp/yatemplate-test/01:test.el" "/tmp/yatemplate-test/10:test.el")
+(rename-file "01:test.el" "10:test.el")
 ;; now 02:.*.py and 10:test.el
 (assert-equal '(".*.py" "test.el") (yatemplates))
 

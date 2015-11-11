@@ -1,4 +1,5 @@
 [![MELPA](http://melpa.org/packages/yatemplate-badge.svg)](http://melpa.org/#/yatemplate)
+[![MELPA Stable](http://stable.melpa.org/packages/yatemplate-badge.svg)](http://stable.melpa.org/#/yatemplate)
 
 # YATemplate #
 

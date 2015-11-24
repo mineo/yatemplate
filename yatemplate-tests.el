@@ -34,7 +34,6 @@
 (note "yatemplate-fill-alist: two entries")
 (write-region "a" nil "02:.*.py")
 (assert-equal '("test.el" ".*.py") (yatemplates))
-(assert-equal '("test.el" ".*.py") (yatemplates))
 
 (note "yatemplate-fill-alist: rename file")
 (rename-file "01:test.el" "10:test.el")

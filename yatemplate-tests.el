@@ -26,24 +26,24 @@
 
 (note "yatemplate-fill-alist: one entry")
 (write-region "a" nil "01:test.el")
-(assert-equal '("test.el") (yatemplates))
+(assert-equal '("test.el$") (yatemplates))
 
 (note "yatemplate-fill-alist: not duplicate")
-(assert-equal '("test.el") (yatemplates))
+(assert-equal '("test.el$") (yatemplates))
 
 (note "yatemplate-fill-alist: two entries")
 (write-region "a" nil "02:.*.py")
-(assert-equal '("test.el" ".*.py") (yatemplates))
+(assert-equal '("test.el$" ".*.py$") (yatemplates))
 
 (note "yatemplate-fill-alist: rename file")
 (rename-file "01:test.el" "10:test.el")
 ;; now 02:.*.py and 10:test.el
-(assert-equal '(".*.py" "test.el") (yatemplates))
+(assert-equal '(".*.py$" "test.el$") (yatemplates))
 
 (note "yatemplate-fill-alist: delete file")
 (delete-file "10:test.el")
 ;; now 02:.*.py
-(assert-equal '(".*.py") (yatemplates))
+(assert-equal '(".*.py$") (yatemplates))
 
 
 (delete-directory yatemplate-dir t)

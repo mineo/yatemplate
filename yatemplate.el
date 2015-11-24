@@ -81,11 +81,13 @@
   "Return a sorted list of files in the template directory."
   (sort (file-expand-wildcards (concat yatemplate-dir "**/*")) 'string<))
 
-(defun yatemplate-filename-split-regex (FILENAME)
+(defun yatemplate-regex-from-filename (FILENAME)
   "Split the regular expression from FILENAME and return it."
   (let ((split-name (split-string FILENAME ":")))
     (if (eq (length split-name) 2)
-        (nth 1 split-name)
+        ;; Add the dollar sign for end-of-string automatically since the last
+        ;; characters of the filename are most likely a file extension.
+        (concat (nth 1 split-name) "$")
       (progn
         (lwarn "yatemplate" 'error
                "%s filename does not contain exactly one colon"
@@ -97,7 +99,7 @@
   "Fill `auto-insert-alist'."
   (yatemplate-remove-old-yatemplates-from-alist)
   (dolist (filename (reverse (yatemplate-sorted-files-in-dir)) nil)
-    (let ((file-regex (yatemplate-filename-split-regex filename)))
+    (let ((file-regex (yatemplate-regex-from-filename filename)))
       (if file-regex
           (push `(,file-regex . [,filename yatemplate-expand-yas-buffer])
                 auto-insert-alist)))))

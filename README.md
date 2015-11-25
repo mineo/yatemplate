@@ -29,7 +29,7 @@ the content of the template file and then expand the content of the buffer with
 can use everything [YASnippet][yasnippet_writing] offers in the template.
 
 Note that a dollar sign `$` will be added to the end of the regular expression
-automatically because most of the template fill names will very likely be of the
+automatically because most of the template filenames will very likely be of the
 form `filename.extension`. If you want to specify a template filename where the
 last letters are not the extension, add `.*` at the end.
 

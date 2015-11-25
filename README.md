@@ -10,7 +10,7 @@ yatemplate RET</kbd>.
 
 ## Description ##
 
-This package bridges the gap betwen [YASnippet][yasnippet_homepage] and
+This package bridges the gap between [YASnippet][yasnippet_homepage] and
 [auto-insert-mode][]. By populating auto-insert-alist with filenames and
 automatically expanding their content after insertion by auto-insert-mode, it's
 an easy way to create dynamic file templates. Simply call

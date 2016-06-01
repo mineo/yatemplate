@@ -87,9 +87,13 @@ has special meaning in regular expressions."
   "The copyright owner for the buffer.
 Particularly useful when combined with `dir-locals.el'.")
 
+(put 'yatemplate-owner 'safe-local-variable #'stringp)
+
 (defvar-local yatemplate-license "http://www.gnu.org/licenses/gpl.html"
   "The license (usually a URL) for the buffer.
 Particularly useful when combined with `dir-locals.el'.")
+
+(put 'yatemplate-license 'safe-local-variable #'stringp)
 
 (defun yatemplate-expand-yas-buffer ()
   "Expand the whole buffer with `yas-expand-snippet'."

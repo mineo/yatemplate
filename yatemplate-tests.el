@@ -1,4 +1,3 @@
-;;;; (executable-interpret (format "emacs -batch -L %s -L %s -l %s" (file-name-directory (locate-library "test-simple.elc")) (file-name-directory (locate-library "yasnippet.elc")) buffer-file-name))
 (require 'test-simple)
 (test-simple-start)
 

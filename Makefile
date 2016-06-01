@@ -1,6 +1,11 @@
-INSTALL_DEPS = "(progn (package-initialize) (package-install 'test-simple) (package-install 'yasnippet))"
+CASK = cask
+EMACSBATCH = $(CASK) exec emacs -Q --batch -L .
+
+.PHONY: setup
+setup:
+	$(CASK) install
+	$(CASK) update
 
 .PHONY: test
-
 test:
-	emacs --batch --eval $(INSTALL_DEPS) -l yatemplate-tests.el
+	$(EMACSBATCH) -l yatemplate-tests.el

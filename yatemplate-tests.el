@@ -50,6 +50,15 @@
 ;; now 02:.*.py
 (assert-equal '(".*.py$") (yatemplates))
 
+(note "yatemplate-fill-alist: the separator can be changed")
+(let* ((new-separator "=")
+       (new-filename (format "1%sseparator.py" new-separator)))
+  (write-region "a" nil new-filename)
+  (setq yatemplate-separator new-separator)
+  (note 'yatemplate-separator)
+  (assert-equal '("separator.py$") (yatemplates))
+  (setq yatemplate-separator ":")
+  (delete-file new-filename))
 
 (delete-directory yatemplate-dir t)
 

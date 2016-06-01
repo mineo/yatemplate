@@ -73,6 +73,16 @@
   "The directory containing file templates."
   :group 'yatemplate)
 
+(defcustom yatemplate-separator
+  ":"
+  "The separator that is used to split template filenames into
+the ordering and regular expression parts.
+
+Note that this will be used as the SEPARATORS argument of
+`split-string', so be careful when setting this to a value that
+has special meaning in regular expressions."
+  :group 'yatemplate)
+
 (defun yatemplate-expand-yas-buffer ()
   "Expand the whole buffer with `yas-expand-snippet'."
   (yas-expand-snippet (buffer-string) (point-min) (point-max)))
@@ -83,14 +93,14 @@
 
 (defun yatemplate-regex-from-filename (FILENAME)
   "Split the regular expression from FILENAME and return it."
-  (let ((split-name (split-string FILENAME ":")))
+  (let ((split-name (split-string FILENAME yatemplate-separator)))
     (if (eq (length split-name) 2)
         ;; Add the dollar sign for end-of-string automatically since the last
         ;; characters of the filename are most likely a file extension.
         (concat (nth 1 split-name) "$")
       (progn
-        (message "yatemplate: %s does not contain exactly one colon"
-                 FILENAME)
+        (message "yatemplate: %s does not contain %s exactly once"
+                 FILENAME yatemplate-separator)
         nil))))
 
 ;;;###autoload

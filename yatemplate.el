@@ -83,6 +83,14 @@ Note that this will be used as the SEPARATORS argument of
 has special meaning in regular expressions."
   :group 'yatemplate)
 
+(defvar-local yatemplate-owner user-full-name
+  "The copyright owner for the buffer.
+Particularly useful when combined with `dir-locals.el'.")
+
+(defvar-local yatemplate-license "http://www.gnu.org/licenses/gpl.html"
+  "The license (usually a URL) for the buffer.
+Particularly useful when combined with `dir-locals.el'.")
+
 (defun yatemplate-expand-yas-buffer ()
   "Expand the whole buffer with `yas-expand-snippet'."
   (yas-expand-snippet (buffer-string) (point-min) (point-max)))

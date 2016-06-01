@@ -1,5 +1,4 @@
 CASK = cask
-EMACSBATCH = $(CASK) exec emacs -Q --batch -L .
 
 .PHONY: setup
 setup:
@@ -8,4 +7,4 @@ setup:
 
 .PHONY: test
 test:
-	$(EMACSBATCH) -l yatemplate-tests.el
+	$(CASK) exec buttercup -L .

@@ -1,6 +1,6 @@
 ;;; yatemplate.el --- File templates with yasnippet
 
-;; Copyright (C) 2015  Wieland Hoffmann <themineo+yatemplate@gmail.com>
+;; Copyright (C) 2015, 2016  Wieland Hoffmann <themineo+yatemplate@gmail.com>
 
 ;; Author: Wieland Hoffmann <themineo+yatemplate@gmail.com>
 ;; URL: https://github.com/mineo/yatemplate
@@ -89,9 +89,8 @@
         ;; characters of the filename are most likely a file extension.
         (concat (nth 1 split-name) "$")
       (progn
-        (lwarn "yatemplate" 'error
-               "%s filename does not contain exactly one colon"
-               FILENAME)
+        (message "yatemplate: %s does not contain exactly one colon"
+                 FILENAME)
         nil))))
 
 ;;;###autoload

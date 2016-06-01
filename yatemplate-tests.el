@@ -40,6 +40,11 @@
 ;; now 02:.*.py and 10:test.el
 (assert-equal '(".*.py$" "test.el$") (yatemplates))
 
+(note "yatemplate-fill-alist: files without colons get ignored")
+(write-region "a" nil "nocolon.py")
+(assert-equal '(".*.py$" "test.el$") (yatemplates))
+(delete-file "nocolon.py")
+
 (note "yatemplate-fill-alist: delete file")
 (delete-file "10:test.el")
 ;; now 02:.*.py

@@ -47,7 +47,8 @@
 (describe
  "Yatemplate"
  (before-all
-  (setq yatemplate-dir "/tmp/yatemplate-test"))
+  (setq yatemplate-dir
+        (concat 'temporary-file-directory "yatemplate-test")))
  (before-each
   (mkdir yatemplate-dir t)
   (setq default-directory yatemplate-dir))

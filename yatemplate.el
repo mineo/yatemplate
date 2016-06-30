@@ -73,6 +73,7 @@
   "The directory containing file templates."
   :group 'yatemplate)
 
+;;;###autoload
 (defcustom yatemplate-separator
   ":"
   "The separator that is used to split template filenames into

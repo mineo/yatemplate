@@ -28,6 +28,14 @@
 (require 'shut-up)
 (require 'yatemplate)
 
+(defmacro yatemplate-with-file-in-dir (dir file-name &rest body)
+  "Call BODY after opening a buffer visiting FILE-NAME in DIR."
+  `(unwind-protect
+       (progn
+         (find-file (concat ,dir "/" ,file-name))
+         ,(macroexp-progn body))
+     (kill-buffer (current-buffer))))
+
 (defun yatemplates ()
   "Regenerate `auto-insert-alist' and return all entries our entries."
   (shut-up
@@ -100,6 +108,12 @@
       (expect (yatemplates) :to-have-same-items-as '("bla.el$")))
   (after-each
    (setq yatemplate-separator ":")))
+ (it "activates snippet-mode in files in yatemplate-dir"
+     (yatemplate-with-file-in-dir
+      yatemplate-dir
+      "foo.el"
+      (expect major-mode :to-be 'snippet-mode)
+      (expect yas--guessed-modes :to-contain 'emacs-lisp-mode)))
  (after-each
   (delete-directory yatemplate-dir t)))
 

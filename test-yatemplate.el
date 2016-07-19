@@ -37,7 +37,7 @@
      (kill-buffer (current-buffer))))
 
 (defun yatemplates ()
-  "Regenerate `auto-insert-alist' and return all entries our entries."
+  "Regenerate `auto-insert-alist' and return all our entries."
   (shut-up
    (yatemplate-fill-alist))
   (mapcar

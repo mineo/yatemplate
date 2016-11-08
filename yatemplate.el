@@ -139,19 +139,19 @@ Particularly useful when combined with `.dir-locals.el'.")
          auto-insert-alist)))
 
 ;;; Hooks
-(defun find-file-hook--yatemplate ()
+(defun yatemplate--find-file-hook ()
   "Set yatemplate files `snippet-mode' to be able to test."
   (when (file-in-directory-p buffer-file-name yatemplate-dir)
     (let ((mode major-mode))
       (snippet-mode)
       (set (make-local-variable 'yas--guessed-modes) (list mode)))))
-(add-hook 'find-file-hook 'find-file-hook--yatemplate)
+(add-hook 'find-file-hook 'yatemplate--find-file-hook)
 
-(defun after-save-hook--yatemplate ()
+(defun yatemplate--after-save-hook ()
   "Set `auto-insert-alist' after saving yatemplate files."
   (when (file-in-directory-p buffer-file-name yatemplate-dir)
     (yatemplate-fill-alist)))
-(add-hook 'after-save-hook 'after-save-hook--yatemplate)
+(add-hook 'after-save-hook 'yatemplate--after-save-hook)
 
 (provide 'yatemplate)
 ;;; yatemplate.el ends here

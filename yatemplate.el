@@ -5,7 +5,7 @@
 ;; Author: Wieland Hoffmann <themineo+yatemplate@gmail.com>
 ;; URL: https://github.com/mineo/yatemplate
 ;; Version: 1.0
-;; Package-Requires: ((yasnippet "0.8.1"))
+;; Package-Requires: ((yasnippet "0.8.1") (emacs "24.3"))
 ;; Keywords: files, convenience
 
 ;; This file is not part of GNU Emacs.

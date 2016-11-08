@@ -76,7 +76,9 @@
 ;;;###autoload
 (defcustom yatemplate-separator
   ":"
-  "The separator that is used to split template filenames into
+  "Separator used for splitting filenames.
+
+This is the separator that is used to split template filenames into
 the ordering and regular expression parts.
 
 Note that this will be used as the SEPARATORS argument of

@@ -153,5 +153,12 @@ Particularly useful when combined with `.dir-locals.el'.")
     (yatemplate-fill-alist)))
 (add-hook 'after-save-hook 'yatemplate--after-save-hook)
 
+(defun yatemplate-unload-function ()
+  "Unload function for yatemplate."
+  (interactive)
+  (remove-hook 'find-file-hook yatemplate--find-file-hook)
+  (remove-hook 'after-save-hook yatemplate--after-save-hook)
+  (yatemplate-remove-old-yatemplates-from-alist))
+
 (provide 'yatemplate)
 ;;; yatemplate.el ends here

@@ -1,5 +1,15 @@
 language: emacs-lisp
 sudo: false
+cache:
+  - directories:
+      # Cache stable Emacs binaries (saves 1min per job)
+      - "$HOME/emacs/"
+# Allow Emacs snapshot builds to fail and don’t wait for these as they can take
+# a looooong time
+matrix:
+  fast_finish: true
+  allow_failures:
+    - env: EMACS_VERSION=snapshot
 env:
   - EMACS_VERSION=24.3
   - EMACS_VERSION=24.5

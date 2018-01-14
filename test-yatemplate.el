@@ -114,6 +114,14 @@
       "foo.el"
       (expect major-mode :to-be 'snippet-mode)
       (expect yas--guessed-modes :to-contain 'emacs-lisp-mode)))
+ (describe
+  "when yatemplate-unload-function is called"
+  (it "unloads all yatemplate hooks"
+      (expect find-file-hook :to-contain 'yatemplate--find-file-hook)
+      (expect after-save-hook :to-contain 'yatemplate--after-save-hook)
+      (yatemplate-unload-function)
+      (expect find-file-hook :not :to-contain 'yatemplate--find-file-hook)
+      (expect after-save-hook :not :to-contain 'yatemplate--after-save-hook)))
  (after-each
   (delete-directory yatemplate-dir t)))
 

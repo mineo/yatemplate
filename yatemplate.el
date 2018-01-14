@@ -1,6 +1,6 @@
 ;;; yatemplate.el --- File templates with yasnippet
 
-;; Copyright (C) 2015, 2016  Wieland Hoffmann <themineo+yatemplate@gmail.com>
+;; Copyright (C) 2015, 2016, 2018  Wieland Hoffmann <themineo+yatemplate@gmail.com>
 
 ;; Author: Wieland Hoffmann <themineo+yatemplate@gmail.com>
 ;; URL: https://github.com/mineo/yatemplate
@@ -141,6 +141,8 @@ Particularly useful when combined with `.dir-locals.el'.")
 ;;; Hooks
 (defun yatemplate--find-file-hook ()
   "Set yatemplate files `snippet-mode' to be able to test."
+  ;; Some modes (for example nov-mode) explicitly call `set-visited-file-name
+  ;; nil t', in which case buffer-file-name returns nil.
   (when (and buffer-file-name (file-in-directory-p buffer-file-name yatemplate-dir))
     (let ((mode major-mode))
       (snippet-mode)

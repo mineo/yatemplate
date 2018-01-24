@@ -38,6 +38,7 @@ before_install:
   # Download the makefile to emacs-travis.mk
   - wget 'https://raw.githubusercontent.com/flycheck/emacs-travis/master/emacs-travis.mk'
   - if [[ -n $EMACS_VERSION ]]; then make -s -f emacs-travis.mk install_emacs; fi
+  - if [[ -n $HOME/.cask ]]; then make -s -f emacs-travis.mk install_cask; fi
 install:
   - make setup
 script:

@@ -1,33 +1,41 @@
-language: emacs-lisp
-sudo: false
-cache:
-  - directories:
-      # Cache stable Emacs binaries (saves 1min per job)
-      - "$HOME/emacs/"
-# Allow Emacs snapshot builds to fail and don’t wait for these as they can take
-# a looooong time
+language: ruby
+# Emacs fails to build in container-based builds on Travis
+# See https://github.com/travis-ci/travis-ci/issues/9061
+# and https://github.com/moby/moby/issues/22801
+sudo: required
+dist: trusty
+# Allow Emacs snapshot builds to fail and don't wait for it
 matrix:
   fast_finish: true
   allow_failures:
     - env: EMACS_VERSION=snapshot
+# Cache stable Emacs binaries and packages
+cache:
+  bundler: true
+  apt: true
+  directories:
+      - "$HOME/emacs"
+git:
+  depth: 1
 env:
-  - EMACS_VERSION=24.3
-  - EMACS_VERSION=24.5
-  - EMACS_VERSION=25.1
-  - EMACS_VERSION=25.2
-  - EMACS_VERSION=25.3
-  - EMACS_VERSION=snapshot
+  matrix:
+    - EMACS_VERSION=24.3
+    - EMACS_VERSION=24.4
+    - EMACS_VERSION=24.5
+    - EMACS_VERSION=25.1-rc2
+    - EMACS_VERSION=25.1
+    - EMACS_VERSION=25.2
+    - EMACS_VERSION=25.3
+    - EMACS_VERSION=26.0.90 PRETEST=yes
+    - EMACS_VERSION=snapshot
+  global:
+    # Maximum number of executing procesors
+    - MAKE_JOBS=$(getconf _NPROCESSORS_ONLN)
 before_install:
   # Configure $PATH: Executables are installed to $HOME/bin
   - export PATH="$HOME/bin:$PATH"
+script:
   # Download the makefile to emacs-travis.mk
   - wget 'https://raw.githubusercontent.com/flycheck/emacs-travis/master/emacs-travis.mk'
-  # Install Emacs (according to $EMACS_VERSION) and Cask
-  - make -f emacs-travis.mk install_emacs
-  - make -f emacs-travis.mk install_cask
-install:
-  # Install your dependencies
-  - make setup
-script:
-  # Run your tests
-  - make test
+  - if [[ -n $EMACS_VERSION ]]; then make -s -f emacs-travis.mk install_emacs; fi
+  - make -f emacs-travis.mk test

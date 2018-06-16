@@ -106,7 +106,7 @@ Particularly useful when combined with `.dir-locals.el'.")
 
 (defun yatemplate-sorted-files-in-dir ()
   "Return a sorted list of files in the template directory."
-  (sort (file-expand-wildcards (concat yatemplate-dir "**/*")) 'string<))
+  (sort (file-expand-wildcards (concat (file-name-as-directory yatemplate-dir) "*")) 'string<))
 
 (defun yatemplate-regex-from-filename (FILENAME)
   "Split the regular expression from FILENAME and return it."

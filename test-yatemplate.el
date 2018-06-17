@@ -50,13 +50,13 @@
 (defun touch (filename)
   "Touch FILENAME without any messages."
   (shut-up
-    (write-region "a" nil filename)))
+   (write-region "a" nil filename)))
 
 (describe
  "Yatemplate"
  (before-all
   (setq yatemplate-dir
-        (concat 'temporary-file-directory "yatemplate-test")))
+        (concat temporary-file-directory "yatemplate-test")))
  (before-each
   (mkdir yatemplate-dir t)
   (setq default-directory yatemplate-dir))

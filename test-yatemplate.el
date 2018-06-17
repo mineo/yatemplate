@@ -70,37 +70,37 @@
      (expect (yatemplates) :not :to-be-truthy))
  (it "recognizes a single file"
      (touch "01:test.el")
-     (expect (yatemplates) :to-have-same-items-as '("test.el$")))
+     (expect (yatemplates) :to-equal '("test.el$")))
  (it "doesn't create duplicates"
      (touch "01:test.el")
-     (expect (yatemplates) :to-have-same-items-as '("test.el$"))
-     (expect (yatemplates) :to-have-same-items-as '("test.el$")))
+     (expect (yatemplates) :to-equal '("test.el$"))
+     (expect (yatemplates) :to-equal '("test.el$")))
  (it "recognizes multiple files"
      (touch "01:test.el")
      (touch "02:.*.py")
-     (expect (yatemplates) :to-have-same-items-as '(".*.py$" "test.el$")))
+     (expect (yatemplates) :to-equal '("test.el$" ".*.py$")))
  (it "doesn't keep renamed files"
      (touch "01:test.el")
      (touch "02:.*.py")
-     (expect (yatemplates) :to-have-same-items-as '(".*.py$" "test.el$"))
+     (expect (yatemplates) :to-equal '("test.el$" ".*.py$"))
      (rename-file "01:test.el" "10:testbla.el")
-     (expect (yatemplates) :to-have-same-items-as '(".*.py$" "testbla.el$")))
+     (expect (yatemplates) :to-equal '(".*.py$" "testbla.el$")))
  (it "doesn't keep deleted files"
      (touch "01:test.el")
      (touch "02:.*.py")
-     (expect (yatemplates) :to-have-same-items-as '(".*.py$" "test.el$"))
+     (expect (yatemplates) :to-equal '("test.el$" ".*.py$"))
      (delete-file "01:test.el")
-     (expect (yatemplates) :to-have-same-items-as '(".*.py$")))
+     (expect (yatemplates) :to-equal '(".*.py$")))
  (it "ignores files without yatemplate-separator in their name"
      (touch "01:test.el")
      (touch "02-.*.py")
-     (expect (yatemplates) :to-have-same-items-as '("test.el$")))
+     (expect (yatemplates) :to-equal '("test.el$")))
  (it "only loads files in yatemplate-dir"
      (touch "01:test.el")
      (let ((not-template-directory (file-name-as-directory (concat yatemplate-dir "notreally"))))
        (mkdir not-template-directory t)
        (touch (concat not-template-directory "02:.*.py"))
-       (expect (yatemplates) :to-have-same-items-as '("test.el$"))))
+       (expect (yatemplates) :to-equal '("test.el$"))))
  (describe
   "when the separator is changed"
   (before-all
@@ -108,16 +108,16 @@
   (it "removes no longer matching files"
       (touch "01:test.el")
       (touch "02:.*.py")
-      (expect (yatemplates) :to-have-same-items-as '(".*.py$" "test.el$"))
+      (expect (yatemplates) :to-equal '("test.el$" ".*.py$"))
       (setq yatemplate-separator "=")
       (expect (yatemplates) :not :to-be-truthy))
   (it "replaces no longer matching files with now matching ones"
       (touch "01:test.el")
       (touch "02:.*.py")
       (touch "01=bla.el")
-      (expect (yatemplates) :to-have-same-items-as '(".*.py$" "test.el$"))
+      (expect (yatemplates) :to-equal '("test.el$" ".*.py$" ))
       (setq yatemplate-separator "=")
-      (expect (yatemplates) :to-have-same-items-as '("bla.el$")))
+      (expect (yatemplates) :to-equal '("bla.el$")))
   (after-each
    (setq yatemplate-separator ":")))
  (it "activates snippet-mode in files in yatemplate-dir"

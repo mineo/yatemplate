@@ -55,9 +55,15 @@
 (describe
  "Yatemplate"
  (before-all
-  (setq yatemplate-dir
-        (concat temporary-file-directory "yatemplate-test")))
+  (setq
+   ;; The root directory for tests
+   yatemplate-toplevel-test-dir (file-name-as-directory (concat temporary-file-directory "yatemplate-test"))
+   ;; The directory in which to keep templates during tests. This doesn't
+   ;; contain a trailing slash on purpose to ensure it's really treated as a
+   ;; directory name throughout the code.
+   yatemplate-dir (concat yatemplate-toplevel-test-dir "templates")))
  (before-each
+  (mkdir yatemplate-toplevel-test-dir t)
   (mkdir yatemplate-dir t)
   (setq default-directory yatemplate-dir))
  (it "doesn't add any entries unless asked"
@@ -89,6 +95,12 @@
      (touch "01:test.el")
      (touch "02-.*.py")
      (expect (yatemplates) :to-have-same-items-as '("test.el$")))
+ (it "only loads files in yatemplate-dir"
+     (touch "01:test.el")
+     (let ((not-template-directory (file-name-as-directory (concat yatemplate-dir "notreally"))))
+       (mkdir not-template-directory t)
+       (touch (concat not-template-directory "02:.*.py"))
+       (expect (yatemplates) :to-have-same-items-as '("test.el$"))))
  (describe
   "when the separator is changed"
   (before-all
@@ -123,7 +135,7 @@
       (expect find-file-hook :not :to-contain 'yatemplate--find-file-hook)
       (expect after-save-hook :not :to-contain 'yatemplate--after-save-hook)))
  (after-each
-  (delete-directory yatemplate-dir t)))
+  (delete-directory yatemplate-toplevel-test-dir t)))
 
 (provide 'test-yatemplate)
 ;;; test-yatemplate.el ends here

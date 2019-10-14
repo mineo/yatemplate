@@ -22,6 +22,8 @@ jobs:
     - uses: purcell/setup-emacs@master
       with:
        version: ${{ matrix.emacs_version }}
+    - name: Install cask
+      run: git clone --depth=1 https://github.com/cask/cask.git "$(HOME)/.cask" && ln -s "$(HOME)/.cask/bin/cask" "$(HOME)/bin/cask"
     - uses: actions/checkout@v1
     - name: Run tests
       run: make setup test

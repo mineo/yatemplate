@@ -105,7 +105,7 @@
        (mkdir not-template-directory t)
        (touch (concat not-template-directory "02:.*.py"))
        (expect (yatemplates) :to-equal '("test.el$"))))
- (it "does not warn about files matched by yatemplate-random-other-files"
+ (it "does not warn about files matched by yatemplate-ignored-files-regexp"
      (touch "README.md")
      (touch "foo.txt")
      (touch "01:test.el")

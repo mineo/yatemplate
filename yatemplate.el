@@ -1,6 +1,6 @@
 ;;; yatemplate.el --- File templates with yasnippet
 
-;; Copyright (C) 2015, 2016, 2018  Wieland Hoffmann <themineo+yatemplate@gmail.com>
+;; Copyright (C) 2015, 2016, 2018, 2020  Wieland Hoffmann <themineo+yatemplate@gmail.com>
 
 ;; Author: Wieland Hoffmann <themineo+yatemplate@gmail.com>
 ;; URL: https://github.com/mineo/yatemplate
@@ -86,6 +86,11 @@ Note that this will be used as the SEPARATORS argument of
 has special meaning in regular expressions."
   :group 'yatemplate)
 
+;;;###autoload
+(defcustom yatemplate-ignored-files-regexp "README.md$"
+  "Regular expression matching files that do not contain `yatemplate-separator', but will generate no warning."
+  :group 'yatemplate)
+
 (defvar-local yatemplate-owner user-full-name
   "The copyright owner for the buffer.
 Particularly useful when combined with `.dir-locals.el'.")
@@ -116,8 +121,9 @@ Particularly useful when combined with `.dir-locals.el'.")
         ;; characters of the filename are most likely a file extension.
         (concat (nth 1 split-name) "$")
       (progn
-        (message "yatemplate: %s does not contain %s exactly once"
-                 FILENAME yatemplate-separator)
+        (unless (string-match yatemplate-ignored-files-regexp FILENAME)
+          (message "yatemplate: %s does not contain %s exactly once"
+                   FILENAME yatemplate-separator))
         nil))))
 
 ;;;###autoload

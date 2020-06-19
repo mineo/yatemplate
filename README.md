@@ -51,4 +51,4 @@ inserted and expanded into new files.
 
 [yasnippet_writing]: http://capitaomorte.github.io/yasnippet/snippet-development.html
 
-[yasnippet_homepage]: https://capitaomorte.github.io/yasnippet/
+[yasnippet_homepage]: https://joaotavora.github.io/yasnippet/

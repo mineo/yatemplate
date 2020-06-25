@@ -71,7 +71,8 @@
 (defcustom yatemplate-dir
   (locate-user-emacs-file "templates")
   "The directory containing file templates."
-  :group 'yatemplate)
+  :group 'yatemplate
+  :type 'directory)
 
 ;;;###autoload
 (defcustom yatemplate-separator
@@ -84,12 +85,14 @@ the ordering and regular expression parts.
 Note that this will be used as the SEPARATORS argument of
 `split-string', so be careful when setting this to a value that
 has special meaning in regular expressions."
-  :group 'yatemplate)
+  :group 'yatemplate
+  :type 'string)
 
 ;;;###autoload
 (defcustom yatemplate-ignored-files-regexp "README.md$"
   "Regular expression matching files that do not contain `yatemplate-separator', but will generate no warning."
-  :group 'yatemplate)
+  :group 'yatemplate
+  :type 'regexp)
 
 (defvar-local yatemplate-owner user-full-name
   "The copyright owner for the buffer.

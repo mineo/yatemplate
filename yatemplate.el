@@ -172,5 +172,11 @@ Particularly useful when combined with `.dir-locals.el'.")
   (remove-hook 'after-save-hook 'yatemplate--after-save-hook)
   (yatemplate-remove-old-yatemplates-from-alist))
 
+(defun yatemplate-reload-all ()
+  "Reload all templates."
+  (interactive)
+  (yatemplate-remove-old-yatemplates-from-alist)
+  (yatemplate-fill-alist))
+
 (provide 'yatemplate)
 ;;; yatemplate.el ends here

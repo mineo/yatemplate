@@ -145,7 +145,8 @@ Particularly useful when combined with `.dir-locals.el'.")
         (cl-remove-if
          (lambda (pair)
            (ignore-errors (eq 'yatemplate-expand-yas-buffer (aref (cdr pair) 1))))
-         auto-insert-alist)))
+         auto-insert-alist))
+  nil)
 
 ;;; Hooks
 (defun yatemplate--find-file-hook ()

@@ -151,5 +151,9 @@
  (after-each
   (delete-directory yatemplate-toplevel-test-dir t)))
 
+(describe "yatemplate-unload-function"
+  (it "should return nil"
+      (expect (yatemplate-unload-function) :to-equal nil)))
+
 (provide 'test-yatemplate)
 ;;; test-yatemplate.el ends here

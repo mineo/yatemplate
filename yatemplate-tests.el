@@ -48,7 +48,7 @@
 (defun yatemplates ()
   "Regenerate `auto-insert-alist' and return all our entries."
   (shut-up
-   (yatemplate-fill-alist))
+   (yatemplate-reload-all))
   (yatemplate-entries))
 
 (defun touch (filename)

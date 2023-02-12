@@ -1,4 +1,4 @@
-;;; yatemplate.el --- File templates with yasnippet
+;;; yatemplate.el --- File templates with yasnippet -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2015, 2016, 2018, 2020  Wieland Hoffmann <themineo+yatemplate@gmail.com>
 
@@ -32,6 +32,9 @@
 ;; your Emacs initialization file to populate `auto-insert-alist' with filenames
 ;; from `yatemplate-dir'.
 
+;; Of course, you will need to enable `auto-insert-mode' to have the snippet
+;; inserted and expanded into new files.
+
 ;; Each filename will be turned into a new element to `push' onto
 ;; `auto-insert-alist'.  To guarantee a particular order, filenames must contain
 ;; one colon (":").  After collecting all the filenames in `yatemplate-dir',
@@ -53,8 +56,20 @@
 ;; `yatemplate-fill-alist' will first `push' (".*.py" . ACTION) onto
 ;; `auto-insert-alist' and then ("test_.*.py" . ACTION).
 
-;; Of course, you will need to enable `auto-insert-mode' to have the snippet
-;; inserted and expanded into new files.
+;; You may also define file templates by placing it in a directory defined in `yas-snippet-dirs'. Add the 'group' snippet directive with 'yatemplate' as part of the group, like so:
+
+;; # group: yatemplate
+;; or
+;; # group: yatemplate any-other-groups
+;; or use the `.yas-make-groups' functionality as per YASnippet to set the snippet as part of the "yatemplate" group.
+
+;; You may specify the file regexp that will match the file template as in the file-based regexp method above, but without limitation of the filesystem. To do this, simply add the condition snippet directive:
+
+;; # condition: ".*.el"
+
+;; The string set as the condition of the snippet will be detected as regexp to use to activate the file template. If you do not specify a condition, the regexps will be determined by the snippet's major modes' `auto-mode-alist' entries.
+
+;; Whenever you save your snippet using the usual yasnippet mechanisms, your file templates will load into `auto-insert-alist'.
 
 ;;; Code:
 
@@ -112,6 +127,9 @@ Particularly useful when combined with `.dir-locals.el'.")
   "Expand the whole buffer with `yas-expand-snippet'."
   (yas-expand-snippet (buffer-string) (point-min) (point-max)))
 
+(defun yatemplate-expand-yas-snippet-buffer ()
+  "Expand the whole buffer containing a snippet name")
+
 (defun yatemplate-sorted-files-in-dir ()
   "Return a sorted list of files in the template directory."
   (sort (file-expand-wildcards (concat (file-name-as-directory yatemplate-dir) "*")) 'string<))
@@ -137,7 +155,38 @@ Particularly useful when combined with `.dir-locals.el'.")
     (let ((file-regex (yatemplate-regex-from-filename filename)))
       (if file-regex
           (push `(,file-regex . [,filename yatemplate-expand-yas-buffer])
-                auto-insert-alist)))))
+                auto-insert-alist))))
+  (yatemplate-fill-alist--from-yasnippets))
+
+(defun yatemplate-fill-alist--from-yasnippets ()
+  "Fill `auto-insert-alist' with yasnippet snippets with the group 'yatemplate'"
+  (maphash
+   (lambda (mode-name table)
+     (maphash
+      (lambda (key templates-name-hash)
+	(maphash
+	 (lambda (template-name template)
+	   (when (member "yatemplate" (yas--template-group template))
+	     (let* ((template-condition (yas--template-condition template))
+		    (template-content (yas--template-content template))
+		    (file-regexps
+		     (or (and (stringp template-condition)
+			      (list template-condition))
+			 (mapcar
+			  #'car
+			  (seq-filter (lambda (entry)
+					(when (functionp (cdr entry))
+					  (string= mode-name (symbol-name (cdr entry)))))
+				      auto-mode-alist)))))
+	       (dolist (file-regexp file-regexps)
+		 (push (cons file-regexp
+			     (vector
+			      (lambda () (insert template-content))
+			      'yatemplate-expand-yas-buffer))
+		       auto-insert-alist)))))
+	 templates-name-hash))
+      (yas--table-hash table)))
+   yas--tables))
 
 (defun yatemplate-remove-old-yatemplates-from-alist ()
   "Remove all yatemplates from `auto-insert-alist' not to keep old settings."
@@ -164,6 +213,8 @@ Particularly useful when combined with `.dir-locals.el'.")
   (when (and buffer-file-name (file-in-directory-p buffer-file-name yatemplate-dir))
     (yatemplate-fill-alist)))
 (add-hook 'after-save-hook 'yatemplate--after-save-hook)
+
+(add-hook 'yas-after-reload-hook 'yatemplate-fill-alist)
 
 (defun yatemplate-unload-function ()
   "Unload function for yatemplate."

@@ -15,8 +15,13 @@ This package bridges the gap between [YASnippet][yasnippet_homepage] and
 automatically expanding their content after insertion by auto-insert-mode, it's
 an easy way to create dynamic file templates. Simply call
 `yatemplate-fill-alist` somewhere in your Emacs initialization file to populate
-`auto-insert-alist` with filenames from `yatemplate-dir`.
+`auto-insert-alist` with filenames from `yatemplate-dir`. You may also define
+file templates using the usual yasnippet mechanisms.
 
+Of course, you will need to enable [auto-insert-mode][] to have the snippet
+inserted and expanded into new files.
+
+### File-based regexp ###
 Each filename will be turned into a new element to `push` onto
 `auto-insert-alist`. To guarantee a particular order, filenames must contain one
 colon (":"). After collecting all the filenames in `yatemplate-dir`, their names
@@ -42,8 +47,21 @@ This means that if `yatemplate-dir` looks like this:
 `yatemplate-fill-alist` will first `push` `(".*.py$" . ACTION)` onto
 `auto-insert-alist` and then `("test_.*.py$" . ACTION)`.
 
-Of course, you will need to enable [auto-insert-mode][] to have the snippet
-inserted and expanded into new files.
+### YASippet definitions ###
+You may also define file templates by placing it in a directory defined in `yas-snippet-dirs`. Add the 'group' snippet directive with 'yatemplate' as part of the group, like so:
+
+`# group: yatemplate`
+or
+`# group: yatemplate any-other-groups`
+or use the `.yas-make-groups` functionality as per YASnippet to set the snippet as part of the `yatemplate` group.
+
+You may specify the file regexp that will match the file template as in the file-based regexp method above, but without limitation of the filesystem. To do this, simply add the condition snippet directive:
+
+`# condition: ".*.el"`
+
+The string set as the condition of the snippet will be detected as regexp to use to activate the file template. If you do not specify a condition, the regexps will be determined by the snippet's major modes' `auto-mode-alist` entries.
+
+Whenever you save your snippet using the usual yasnippet mechanisms, your file templates will load into `auto-insert-alist`.
 
 [MELPA]: http://melpa.org "MELPA"
 

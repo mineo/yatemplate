@@ -127,9 +127,6 @@ Particularly useful when combined with `.dir-locals.el'.")
   "Expand the whole buffer with `yas-expand-snippet'."
   (yas-expand-snippet (buffer-string) (point-min) (point-max)))
 
-(defun yatemplate-expand-yas-snippet-buffer ()
-  "Expand the whole buffer containing a snippet name")
-
 (defun yatemplate-sorted-files-in-dir ()
   "Return a sorted list of files in the template directory."
   (sort (file-expand-wildcards (concat (file-name-as-directory yatemplate-dir) "*")) 'string<))
